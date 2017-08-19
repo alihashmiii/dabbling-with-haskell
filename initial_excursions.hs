@@ -179,5 +179,18 @@ andlist (False:_) = False
 andlist (_:xs) = andlist xs
 
 concatrecur :: [[a]] -> [a]
-concatrecur (b:[]) = b
+concatrecur (y:[]) = y
 concatrecur (x:xs) = [n | n <-x] ++ concatrecur xs
+
+repelem :: Int -> a -> [a]
+repelem 0 _ = []
+repelem n r = r : repelem (n-1) r
+
+-- select nth element
+(x:_) !!! 0 = x
+(_:xs) !!! n = xs !!! (n-1)
+
+elementq :: Eq a => a -> [a] -> Bool
+elementq _ [] = False
+elementq el (x:xs) | el /= x = elementq el xs
+                   | otherwise = True
