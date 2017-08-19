@@ -149,8 +149,8 @@ factorial n = prod [1..n]
 len [] = 0
 len (_:xs) = 1 + len xs
 
-reversels [] = []
-reversels (x:xs) = reversels xs ++ [x]
+reversals [] = []
+reversals (x:xs) = reversals xs ++ [x]
 
 zipfun :: [x] -> [x] -> [(x,x)]
 zipfun [] _ = []
@@ -194,3 +194,62 @@ elementq :: Eq a => a -> [a] -> Bool
 elementq _ [] = False
 elementq el (x:xs) | el /= x = elementq el xs
                    | otherwise = True
+
+mapf1 f xs = [f x | x <- xs]
+
+mapf_ f [] = []
+mapf_ f (x:xs) = f x : mapf_ f xs
+
+filter1 f xs = [x | x <- xs, f x]
+
+filter_ f [] = []
+filter_ f (x:xs) | f x  = x:(filter_ f xs)
+                 | otherwise = filter_ f xs
+
+sumlist [] = 0
+sumlist (x:xs) = x + sumlist xs
+
+productlist [] = 1
+productlist (x:xs) = x * productlist xs
+
+andlist2 [] = True
+andlist2 (x:xs) | x = andlist2 xs
+                | otherwise = False
+
+andlist_ [] = True
+andlist_ (x:xs) = x && andlist_ xs
+
+takewhile _ [] = []
+takewhile p (x:xs) | p x = x:takewhile p xs
+                   | otherwise = []
+
+dropwhile _ [] = []
+dropwhile p (x:xs) | p x = dropwhile p xs
+                   | otherwise = x:xs
+
+-- higher order func (composition and foldr) --
+twicef :: (a -> a) -> (a -> a)
+twicef f = f.f
+
+lengthls :: [a] -> Int
+lengthls = sum.map(\_ -> 1)
+
+sump xs = foldr (+) 0 xs
+prodp xs = foldr (*) 1 xs
+oR xs = foldr (||) False xs
+truep xs = foldr (&&) True xs
+
+lengthlist xs = foldr (\ _ x -> x + 1) 0 xs
+
+-- reverse implementation using fold --
+reversal_r xs = foldr (\ x vec -> vec ++ [x]) [] xs -- 1:(2:(3:[])) -> (([] ++ [3]) ++ [2]) ++ [1] -> [3,2,1]
+reversal_l xs = foldl (\ vec x -> [x] ++ vec) [] xs -- 1:(2:(3:[])) -> [3] ++ ([2] ++ ([1] ++ [])) -> [3,2,1]
+
+-- append using fold --
+(##) xs ys = foldr (:) ys xs -- shorterversion (##) = foldr (:)
+
+-- any p xs AND all p xs are examples of higher order functions, similarly takeWhile and dropWhile are also powerful constructs
+
+-- map and filter as foldr --
+mapfold p xs = foldr (\x vec -> p x : vec) [] xs
+filterfold p xs  = foldr (\x vec -> if p x then x:vec else vec)  [] xs
