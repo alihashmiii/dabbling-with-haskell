@@ -1,93 +1,102 @@
+-- product of list members
 prod [] = 1
 prod (x:xs) = x * prod xs
 
+-- factorial
 factorial n = prod [1..n]
 
+factorial' 0  = 1
+factorial' n = n * factorial (n-1)
+
+-- length of list
 len [] = 0
 len (_:xs) = 1 + len xs
 
-reversals [] = []
-reversals (x:xs) = reversals xs ++ [x]
-
+-- zip lists
 zipfun :: [x] -> [x] -> [(x,x)]
 zipfun [] _ = []
 zipfun _ [] = []
 zipfun (x:xs) (y:ys) = (x,y):zipfun xs ys
 
+-- drop elements
 dropfun :: Int -> [a] -> [a]
 dropfun _ [] = []
 dropfun 0 xs = xs
 dropfun n (_:xs) = dropfun (n-1) xs
 
+-- append
 (+++) :: [a] -> [a] -> [a]
 [] +++ ys = ys
 (x:xs) +++ ys =  x:(xs +++ ys)
 
-qsort :: [Int] -> [Int]
-qsort [] = []
-qsort (x:xs) = qsort smaller ++ [x] ++ qsort larger
-               where
-                  smaller = [n | n <- xs, n <= x]
-                  larger = [n | n <- xs, n > x]
+-- concatenate  
+concatrecur :: [[a]] -> [a]
+concatrecur (y:[]) = y
+concatrecur (x:xs) = [n | n <-x] ++ concatrecur xs
+
+-- repeat element 
+repelem :: Int -> a -> [a]
+repelem 0 _ = []
+repelem n r = r : repelem (n-1) r
+
+-- select nth element from list
+(x:_) !!! 0 = x
+(_:xs) !!! n = xs !!! (n-1)
+
+-- element? of list
+elementq :: Eq a => a -> [a] -> Bool
+elementq _ [] = False
+elementq el (x:xs) | el /= x = elementq el xs
+                   | otherwise = True
+
+mapf1 f xs = [f x | x <- xs] -- list comprehension defining map
+
+-- recursive implementation of map
+mapf_ f [] = []
+mapf_ f (x:xs) = f x : mapf_ f xs
+
+filter1 f xs = [x | x <- xs, f x] -- list comprehension defining filter 
+
+-- recursive implementation of filter
+filter_ f [] = []
+filter_ f (x:xs) | f x  = x:(filter_ f xs)
+                 | otherwise = filter_ f xs
+
+-- summation of list elements
+sumlist [] = 0
+sumlist (x:xs) = x + sumlist xs
+
+-- productlist
+productlist [] = 1
+productlist (x:xs) = x * productlist xs
+
+-- andlist, True if all True
+andlist_ [] = True
+andlist_ (x:xs) = x && andlist_ xs
+
+andlist2 [] = True
+andlist2 (x:xs) | x = andlist2 xs
+                | otherwise = False
 
 andlist :: [Bool] -> Bool
 andlist [] = True
 andlist (False:_) = False
 andlist (_:xs) = andlist xs
 
-concatrecur :: [[a]] -> [a]
-concatrecur (y:[]) = y
-concatrecur (x:xs) = [n | n <-x] ++ concatrecur xs
-
-repelem :: Int -> a -> [a]
-repelem 0 _ = []
-repelem n r = r : repelem (n-1) r
-
--- select nth element
-(x:_) !!! 0 = x
-(_:xs) !!! n = xs !!! (n-1)
-
-elementq :: Eq a => a -> [a] -> Bool
-elementq _ [] = False
-elementq el (x:xs) | el /= x = elementq el xs
-                   | otherwise = True
-
-mapf1 f xs = [f x | x <- xs]
-
-mapf_ f [] = []
-mapf_ f (x:xs) = f x : mapf_ f xs
-
-filter1 f xs = [x | x <- xs, f x]
-
-filter_ f [] = []
-filter_ f (x:xs) | f x  = x:(filter_ f xs)
-                 | otherwise = filter_ f xs
-
-sumlist [] = 0
-sumlist (x:xs) = x + sumlist xs
-
-productlist [] = 1
-productlist (x:xs) = x * productlist xs
-
-andlist2 [] = True
-andlist2 (x:xs) | x = andlist2 xs
-                | otherwise = False
-
-andlist_ [] = True
-andlist_ (x:xs) = x && andlist_ xs
-
+-- takewhile
 takewhile _ [] = []
 takewhile p (x:xs) | p x = x:takewhile p xs
                    | otherwise = []
 
+-- dropwhile 
 dropwhile _ [] = []
 dropwhile p list@(x:xs) | p x = dropwhile p xs
                    | otherwise = list
                    
                    
                    
--- from LYAH ---------------------------------------------------------
-
+-- from LYAH ----------------------------------------------------------------------------------------------------------
+-- my implementation for maximum
 maximum' [] = error "max of []"
 maximum' [x] = x
 maximum' (x:y:[])
@@ -97,7 +106,7 @@ maximum' (x:y:xs)
                  | x > y = maximum' (x:xs)
                  | otherwise = maximum' (y:xs)
 
-
+-- another implementation of maximum from book
 maximum'' :: (Ord a) => [a] -> a
 maximum'' [] = error "max of emptylist"
 maximum'' [x] = x
@@ -106,13 +115,13 @@ maximum'' (x:xs)
                  | otherwise = maxTail
                  where maxTail = maximum'' xs
 
- -- best implementation for maximum
+ -- best implementation for maximum from book
 maximum''' :: Ord a => [a] -> a
 maximum''' [] = error "max of emptylist"
 maximum''' [x] = x
 maximum''' (x:xs) = max x (maximum''' xs)
 
--- replicate
+-- replicate an expression n times
 replicate' :: (Num i, Ord i) => i -> a -> [a]
 replicate' 0 _ = []
 replicate' n expr = expr : (replicate' (n-1) expr)
@@ -138,13 +147,13 @@ reverse' (x:xs) = reverse xs ++ [x]
 repeat' :: Ord a => a -> [a]
 repeat' x = x:repeat' x
 
--- zip --
+-- zip function
 zip' :: Ord a => [a] -> [a] -> [(a,a)]
 zip' _ [] = []
 zip' [] _ = []
 zip' (x:xs) (y:ys) = (x,y): (zip' xs ys)
 
--- elem --
+-- element of a list
 elem' :: Eq a => a -> [a] -> Bool
 elem' _ [] = False
 elem' n (x:xs)
