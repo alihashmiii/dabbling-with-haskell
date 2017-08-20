@@ -224,8 +224,8 @@ takewhile p (x:xs) | p x = x:takewhile p xs
                    | otherwise = []
 
 dropwhile _ [] = []
-dropwhile p (x:xs) | p x = dropwhile p xs
-                   | otherwise = x:xs
+dropwhile p list@(x:xs) | p x = dropwhile p xs
+                   | otherwise = list
 
 -- higher order func (composition and foldr) --
 twicef :: (a -> a) -> (a -> a)
