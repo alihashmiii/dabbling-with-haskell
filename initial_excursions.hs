@@ -253,3 +253,22 @@ reversal_l xs = foldl (\ vec x -> [x] ++ vec) [] xs -- 1:(2:(3:[])) -> [3] ++ ([
 -- map and filter as foldr --
 mapfold p xs = foldr (\x vec -> p x : vec) [] xs
 filterfold p xs  = foldr (\x vec -> if p x then x:vec else vec)  [] xs
+
+-- parsers
+item :: [t] -> [(t, [t])]
+item = \inp -> case inp of
+                 []     -> []
+                 (x:xs) -> [(x,xs)]
+
+p +-+ q = (\inp -> case p inp of
+                   []        -> parse q inp
+                   [(v,out)] -> [(v,out)])
+
+-- check on REPL: (item +-+ return 'd') "$ab" -> [('$',"ab")]
+-- check on REPL: (failure +-+ return 'd') "$ab" -> [('d',"$ab")]
+
+parse p inp = p inp
+
+failure = \ inp -> []
+returnpar v = \inp -> [(v,inp)]
+
