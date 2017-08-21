@@ -175,3 +175,12 @@ quicksort' (x:xs) = let smaller = [n | n <- xs, n < x]
                         larger  = [m | m <- xs, m >= x]
                     in quicksort' smaller ++ [x] ++ quicksort' larger
 
+-- quicksort (using filter func) --
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) = let smaller = filter (<=x) xs
+                       bigger  = filter (>x) xs
+                   in quicksort smaller ++ [x] ++ quicksort bigger
+
+
+
