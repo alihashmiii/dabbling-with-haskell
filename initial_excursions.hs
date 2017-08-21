@@ -272,3 +272,7 @@ parse p inp = p inp
 failure = \ inp -> []
 returnpar v = \inp -> [(v,inp)]
 
+--- below is a nice implementation of a list of partial functions formed from lazy evaluation
+h = map (*) [1..] -- i.e. [(0*) (1*) (2*) ...]
+-- test (h !! 10) 5 = 55
+
