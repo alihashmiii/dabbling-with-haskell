@@ -278,3 +278,8 @@ h = map (*) [1..] -- i.e. [(0*) (1*) (2*) ...]
 
 -- $ or function application with low precedence than space. this can be used to avoid adding paranthesis
 sum $ filter (>10) $ map (*2) [2..10] -- same as sum (filter (> 10) (map (*2) [2..10]))
+
+-- defining function composition i.e. %% receives a func (b->c), another function (a->b) and receives something of type a 
+-- and converts it to c at the end of function application 'f'
+(%%) :: (b -> c) -> (a -> b) -> a -> c
+f %% g = \x -> f $ g x
