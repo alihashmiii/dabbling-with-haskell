@@ -16,3 +16,9 @@ map' p xs = foldr (\x acc -> p x: acc) [] xs
 map'' :: (a -> b) -> [a] -> [b]
 map'' p xs = foldl (\acc x -> acc ++ [p x]) [] xs -- ++ is an expensive operation so the implementation of map using foldr is better
 
+-- constructing filter sieve 
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' p xs = foldr (\x acc -> if p x then x : acc else acc) [] xs
+
+filter'' :: (a -> Bool) -> [a] -> [a]
+filter'' p xs = foldl (\acc x -> if p x then acc ++ [x] else acc) [] xs
