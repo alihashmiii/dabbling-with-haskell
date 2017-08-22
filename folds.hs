@@ -8,3 +8,7 @@ sum'' xs = foldr (+) 0 xs
 -- constructing `elem` using folds 
 elem' :: (Eq a) => a -> [a] -> Bool
 elem' y ys = foldl (\acc n -> if n == y then True else acc) False ys
+
+-- constructing map using foldr
+map' :: (a -> b) -> [a] -> [b]
+map' p xs = foldr (\x acc -> p x: acc) [] xs
