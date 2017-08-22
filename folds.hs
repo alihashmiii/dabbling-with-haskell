@@ -42,3 +42,16 @@ head' xs = foldl1 (\acc _ -> acc) xs -- or foldr1 (\x _ -> x) xs
 -- implementing last with folds
 last' :: [a] -> a
 last' xs = foldr1 (\_ acc -> acc) xs -- or foldl1 (\_ x -> x) xs
+
+
+-- SCAN  (values of accumulator) -------------------
+scanr (+) 0 [1,2,3,4,5] -- [15,14,12,9,5,0]
+scanl (+) 0 [1,2,3,4,5] -- [0,1,3,6,10,15]
+scanl1 (\acc x -> if x > acc then x else acc) [3,4,5,3,7,9,2,1] -- [3,4,5,5,7,9,9,9] 
+
+
+
+
+
+
+
