@@ -34,3 +34,11 @@ reverse' xs = foldl (\acc x -> x:acc) [] xs
 -- product using foldr1
 product' :: (Num a) => [a] -> a
 product' xs = foldr1 (*) xs
+
+-- implementing head with folds
+head' :: [a] -> a
+head' xs = foldl1 (\acc _ -> acc) xs -- or foldr1 (\x _ -> x) xs
+
+-- implementing last with folds
+last' :: [a] -> a
+last' xs = foldr1 (\_ acc -> acc) xs -- or foldl1 (\_ x -> x) xs
