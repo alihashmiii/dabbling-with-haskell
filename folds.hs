@@ -9,6 +9,10 @@ sum'' xs = foldr (+) 0 xs
 elem' :: (Eq a) => a -> [a] -> Bool
 elem' y ys = foldl (\acc n -> if n == y then True else acc) False ys
 
--- constructing map using foldr
+-- constructing map using foldr and foldl
 map' :: (a -> b) -> [a] -> [b]
 map' p xs = foldr (\x acc -> p x: acc) [] xs
+
+map'' :: (a -> b) -> [a] -> [b]
+map'' p xs = foldl (\acc x -> acc ++ [p x]) [] xs -- ++ is an expensive operation so the implementation of map using foldr is better
+
