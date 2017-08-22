@@ -26,4 +26,7 @@ filter'' p xs = foldl (\acc x -> if p x then acc ++ [x] else acc) [] xs
 -- maximum using foldr1 
 maximum' :: (Ord a) => [a] -> a
 maximum' xs = foldr1 (\x acc -> if x > acc then x else acc) xs
-
+ 
+-- reverse using foldl
+reverse' :: [a] -> [a]
+reverse' xs = foldl (\acc x -> x:acc) [] xs
