@@ -52,7 +52,9 @@ scanl (+) 0 [1,2,3,4,5] -- [0,1,3,6,10,15] (accumulate from lhs)
 scanl1 (\acc x -> if x > acc then x else acc) [3,4,5,3,7,9,2,1] -- [3,4,5,5,7,9,9,9] (max in a list)
 scanl (flip (:)) [] [1,2,3] -- [[],[1],[2,1],[3,2,1]]
 
-
+-- number of terms for which (sqrt x1 + sqrt x2 + sqrt x3 ... < 1000)
+sqrtSums :: (Num a, Floating a, Ord a, Enum a) => a -> Int
+sqrtSums thresh = length (takeWhile (< thresh) (scanl1 (\acc x -> acc + sqrt x) [1..]))
 
 
 
