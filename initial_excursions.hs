@@ -276,3 +276,5 @@ returnpar v = \inp -> [(v,inp)]
 h = map (*) [1..] -- i.e. [(0*) (1*) (2*) ...]
 -- test (h !! 10) 5 = 55
 
+-- $ or function application with low precedence than space. this can be used to avoid adding paranthesis
+sum $ filter (>10) $ map (*2) [2..10] -- same as sum (filter (> 10) (map (*2) [2..10]))
