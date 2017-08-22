@@ -58,7 +58,8 @@ mapf_ f (x:xs) = f x : mapf_ f xs
 filter1 f xs = [x | x <- xs, f x] -- list comprehension defining filter 
 
 -- recursive implementation of filter
-filter_ f [] = []
+filter_ :: (a -> Bool) -> [a] -> [a]
+filter_ _ [] = []
 filter_ f (x:xs) | f x  = x:(filter_ f xs)
                  | otherwise = filter_ f xs
 
