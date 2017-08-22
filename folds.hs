@@ -29,7 +29,9 @@ maximum' xs = foldr1 (\x acc -> if x > acc then x else acc) xs
  
 -- reverse using foldl
 reverse' :: [a] -> [a]
-reverse' xs = foldl (\acc x -> x:acc) [] xs -- or reverse' xs = foldl (flip (:)) [] xs
+reverse' xs = foldl (\acc x -> x:acc) [] xs 
+
+reverse'' xs = foldl (flip (:)) [] xs
 
 -- product using foldr1
 product' :: (Num a) => [a] -> a
