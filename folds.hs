@@ -45,6 +45,9 @@ head' xs = foldl1 (\acc _ -> acc) xs -- or foldr1 (\x _ -> x) xs
 last' :: [a] -> a
 last' xs = foldr1 (\_ acc -> acc) xs -- or foldl1 (\_ x -> x) xs
 
+-- alternate list sum
+alternatelistsum :: (Num a)=> [a]-> a
+alternatelistsum xs = foldl (\acc x -> x - acc) 0 xs
 
 -- SCAN  (outputs values of accumulator in fold expressions) -------------------
 scanr (+) 0 [1,2,3,4,5] -- [15,14,12,9,5,0] (accumulate from right)
